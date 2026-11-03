@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti library for correct answer effects -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     
     <script>
         tailwind.config = {
@@ -55,6 +57,14 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.15);
         }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-tealmed-500 selection:text-white relative">
@@ -71,15 +81,16 @@
                     <i class="fa-solid fa-dna text-2xl animate-pulse"></i>
                 </div>
                 <div>
-                    <span class="font-black text-xl tracking-tight text-medical-900 block leading-tight">KHÔNG BIẾT</span>
-                    <span class="text-[11px] font-bold text-tealmed-600 uppercase tracking-widest block">MẪU THÔI ĐỪNG HỎI SAO NHÉ</span>
+                    <span class="font-black text-xl tracking-tight text-medical-900 block leading-tight">RecomBiotech</span>
+                    <span class="text-[11px] font-bold text-tealmed-600 uppercase tracking-widest block">Báo Cáo Học Thuật Chuyên Sâu</span>
                 </div>
             </a>
             
             <!-- Desktop Nav Links -->
-            <nav class="hidden xl:flex items-center space-x-4 text-[11px] font-bold uppercase tracking-wider text-slate-600">
+            <nav class="hidden xl:flex items-center space-x-3 text-[10px] font-bold uppercase tracking-wider text-slate-600">
                 <a href="#mo-dau" class="hover:text-tealmed-600 transition py-1">Lời Mở Đầu</a>
                 <a href="#tong-quan" class="hover:text-tealmed-600 transition py-1">Bản Chất Phân Tử</a>
+                <a href="#uu-diem-chinh" class="hover:text-tealmed-600 transition py-1 text-tealmed-700">Ưu Điểm Chính</a>
                 <a href="#lich-su" class="hover:text-tealmed-600 transition py-1">Lịch Sử</a>
                 <a href="#quy-trinh" class="hover:text-tealmed-600 transition py-1">Quy Trình 6 Bước</a>
                 <a href="#phan-loai" class="hover:text-tealmed-600 transition py-1">Phân Loại</a>
@@ -87,13 +98,13 @@
                 <a href="#co-che" class="hover:text-tealmed-600 transition py-1">Cơ Chế Miễn Dịch</a>
                 <a href="#ung-dung" class="hover:text-tealmed-600 transition py-1">Ứng Dụng</a>
                 <a href="#thach-thuc" class="hover:text-tealmed-600 transition py-1">Thách Thức & AI</a>
-                <a href="#trac-nghiem" class="hover:text-tealmed-600 transition py-1 text-tealmed-600 font-black">Trắc Nghiệm (10 Câu)</a>
+                <a href="#trac-nghiem" class="hover:text-tealmed-600 transition py-1 text-tealmed-600 font-black">Trắc Nghiệm (15 Câu)</a>
             </nav>
 
             <!-- CTA Button -->
             <div class="hidden sm:flex items-center space-x-3">
                 <a href="#trac-nghiem" class="px-4 py-2.5 text-xs font-bold tracking-wider text-white uppercase bg-tealmed-600 hover:bg-tealmed-700 rounded-lg shadow-md hover:shadow-tealmed-500/20 transition flex items-center gap-2">
-                    <i class="fa-solid fa-graduation-cap"></i> Trắc nghiệm 10 câu
+                    <i class="fa-solid fa-graduation-cap"></i> Trắc nghiệm 15 câu
                 </a>
             </div>
 
@@ -107,14 +118,15 @@
         <div id="mobile-menu" class="hidden xl:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-2 text-xs font-semibold">
             <a href="#mo-dau" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">1. Lời Mở Đầu & Trích Dẫn</a>
             <a href="#tong-quan" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">2. Tổng Quan & Bản Chất Phân Tử</a>
-            <a href="#lich-su" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">3. Lịch Sử Phát Triển (1970 - 2026)</a>
-            <a href="#quy-trinh" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">4. Quy Trình Sản Xuất 6 Bước Y Khoa</a>
-            <a href="#phan-loai" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">5. Phân Loại Nền Tảng Vaccine</a>
-            <a href="#so-sanh" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">6. Bảng So Sánh 6 Tiêu Chí</a>
-            <a href="#co-che" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">7. Cơ Chế Miễn Dịch Phân Tử</a>
-            <a href="#ung-dung" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">8. Ứng Dụng Thực Tế Điển Hình</a>
-            <a href="#thach-thuc" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">9. Thách Thức Kỹ Thuật & Xu Hướng AI</a>
-            <a href="#trac-nghiem" onclick="toggleMobileMenu()" class="block text-tealmed-600 font-bold py-1">10. Trắc Nghiệm Tương Tác 10 Câu</a>
+            <a href="#uu-diem-chinh" onclick="toggleMobileMenu()" class="block text-tealmed-700 hover:text-tealmed-600 py-1">3. Ưu Điểm Chính Cốt Lõi</a>
+            <a href="#lich-su" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">4. Lịch Sử Phát Triển (1970 - 2026)</a>
+            <a href="#quy-trinh" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">5. Quy Trình Sản Xuất 6 Bước Y Khoa</a>
+            <a href="#phan-loai" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">6. Phân Loại Nền Tảng Vaccine</a>
+            <a href="#so-sanh" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">7. Bảng So Sánh 6 Tiêu Chí</a>
+            <a href="#co-che" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">8. Cơ Chế Miễn Dịch Phân Tử</a>
+            <a href="#ung-dung" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">9. Ứng Dụng Thực Tế Điển Hình</a>
+            <a href="#thach-thuc" onclick="toggleMobileMenu()" class="block text-slate-700 hover:text-tealmed-600 py-1">10. Thách Thức Kỹ Thuật & Xu Hướng AI</a>
+            <a href="#trac-nghiem" onclick="toggleMobileMenu()" class="block text-tealmed-600 font-bold py-1">11. Trắc Nghiệm Tương Tác 15 Câu</a>
         </div>
     </header>
 
@@ -142,7 +154,7 @@
                             <span>Khám phá báo cáo y khoa</span> <i class="fa-solid fa-arrow-down text-xs"></i>
                         </a>
                         <a href="#trac-nghiem" class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl backdrop-blur-sm border border-white/20 transition text-center text-xs uppercase tracking-wider flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-vial"></i> <span>Trắc nghiệm 10 câu</span>
+                            <i class="fa-solid fa-vial"></i> <span>Trắc nghiệm 15 câu</span>
                         </a>
                     </div>
                 </div>
@@ -233,19 +245,28 @@
                 <div class="lg:col-span-7 space-y-4 text-sm text-slate-700 leading-relaxed">
                     <h3 class="text-xl font-bold text-slate-900">1. Định Nghĩa & Nguyên Lý Cốt Lõi</h3>
                     <p>
-                        <strong>Vaccine Tái Tổ Hợp (Recombinant Vaccine)</strong> là loại vắc-xin được sản xuất bằng cách ứng dụng kỹ thuật di truyền tái tổ hợp DNA/RNA. Thay vì nuôi cấy toàn bộ mầm bệnh nguy hiểm, các nhà khoa học chỉ giải mã và tách trích riêng đoạn gen mã hóa cho protein kháng nguyên đặc hiệu (thường là glycoprotein bề mặt mầm bệnh).
+                        <strong>Vaccine Tái Tổ Hợp (Recombinant Vaccine)</strong> là một phương pháp sản xuất vaccine hiện đại, sử dụng công nghệ DNA tái tổ hợp để sản xuất protein kháng nguyên trong tế bào sống (như vi khuẩn, nấm men hoặc tế bào côn trùng), sau đó tinh chế để tạo thành vaccine[cite: 1]. Thay vì nuôi cấy toàn bộ mầm bệnh nguy hiểm, các nhà khoa học chỉ giải mã và tách trích riêng đoạn gen mã hóa cho protein kháng nguyên đặc hiệu (thường là glycoprotein bề mặt mầm bệnh)[cite: 1, 2].
                     </p>
                     <p>
-                        Đoạn gen này sau đó được ghép vào một <i>thể truyền (expression vector)</i> và đưa vào một <i>tế bào chủ (host cell)</i> thích hợp. Tế bào chủ sẽ đóng vai trò như một "nhà máy sinh học", liên tục tổng hợp ra protein kháng nguyên với số lượng lớn và độ tinh sạch cao.
+                        <strong>Nguyên lý cơ bản:</strong> Chèn gen mã hóa kháng nguyên mục tiêu (ví dụ protein gai bề mặt virus) vào DNA của một tế bào chủ an toàn (tức là vector biểu hiện), hướng dẫn tế bào chủ trở thành "nhà máy" sản xuất protein kháng nguyên này với số lượng lớn, cuối cùng tinh chế protein và kết hợp với tá dược để tạo thành vaccine[cite: 1].
                     </p>
+
+                    <div class="bg-tealmed-50/50 p-4 rounded-xl border border-tealmed-200 space-y-2">
+                        <span class="font-bold text-tealmed-800 text-xs uppercase tracking-wider block flex items-center gap-1">
+                            <i class="fa-solid fa-star text-tealmed-500"></i> Ưu điểm cốt lõi nhất:
+                        </span>
+                        <p class="text-xs text-slate-700 leading-relaxed">
+                            Ưu điểm cốt lõi của nó là <strong>không cần nuôi cấy toàn bộ mầm bệnh</strong>, do đó loại bỏ nguy cơ nhiễm bệnh do vaccine và có thể nhanh chóng, quy mô lớn sản xuất kháng nguyên có độ tinh khiết cao[cite: 1].
+                        </p>
+                    </div>
                     
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm space-y-2 mt-4">
                         <h4 class="font-bold text-slate-900 text-xs uppercase text-tealmed-600">Thành phần cấu trúc một Vector Biểu Hiện (Expression Vector):</h4>
                         <ul class="text-xs space-y-1 text-slate-600 list-disc list-inside">
-                            <li><strong>Promoter mạnh:</strong> Vùng khởi động phiên mã (ví dụ: T7 promoter, AOX1 promoter).</li>
-                            <li><strong>Gene of Interest (GOI):</strong> Đoạn gen mã hóa kháng nguyên bảo vệ đích.</li>
-                            <li><strong>Gen đánh dấu lựa chọn (Selectable Marker):</strong> Kháng kháng sinh hoặc đột phá dinh dưỡng.</li>
-                            <li><strong>Vùng kết thúc phiên mã (Terminator):</strong> Đảm bảo mạch mRN A được tổng hợp chuẩn xác.</li>
+                            <li><strong>Promoter mạnh:</strong> Vùng khởi động phiên mã (ví dụ: T7 promoter, AOX1 promoter)[cite: 2].</li>
+                            <li><strong>Gene of Interest (GOI):</strong> Đoạn gen mã hóa kháng nguyên bảo vệ đích[cite: 2].</li>
+                            <li><strong>Gen đánh dấu lựa chọn (Selectable Marker):</strong> Kháng kháng sinh hoặc đột phá dinh dưỡng[cite: 2].</li>
+                            <li><strong>Vùng kết thúc phiên mã (Terminator):</strong> Đảm bảo mạch mRNA được tổng hợp chuẩn xác[cite: 2].</li>
                         </ul>
                     </div>
                 </div>
@@ -254,53 +275,99 @@
                     <div class="rounded-2xl overflow-hidden border border-slate-200 shadow-lg">
                         <img src="https://images.unsplash.com/photo-1614935151651-0bea6508db6b?auto=format&fit=crop&w=800&q=80" alt="DNA Double Helix Molecular Structure" class="w-full h-80 object-cover">
                         <div class="p-3 bg-slate-900 text-white text-xs">
-                            <strong>Hình 2.1:</strong> Cấu trúc mô phỏng phân tử DNA tái tổ hợp mang đoạn gen kháng nguyên ngoại lai.
+                            <strong>Hình 2.1:</strong> Cấu trúc mô phỏng phân tử DNA tái tổ hợp mang đoạn gen kháng nguyên ngoại lai[cite: 2].
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Detailed Comparison of 4 Host Systems -->
+            <!-- Detailed Comparison of Host Systems -->
             <div class="bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm mt-8">
                 <h3 class="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2">
                     <i class="fa-solid fa-microscope text-tealmed-600"></i>
-                    <span>2. So Sánh 4 Hệ Thống Tế Bào Chủ Biểu Hiện (Host Expression Systems)</span>
+                    <span>2. Các Hệ Thống Tế Bào Chủ Biểu Hiện Phổ Biến (Host Expression Systems)</span>
                 </h3>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-xs">
                     <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-                        <span class="font-extrabold text-medical-800 text-sm block">1. Vi Khuẩn E. coli</span>
-                        <p class="text-slate-600">Tốc độ nhân bản cực nhanh, chi phí lên men rất rẻ, sản lượng thu hoạch protein cao.</p>
-                        <div class="text-rose-700 font-semibold">Nhược điểm: Không có khả năng Glycosyl hóa (PTM), dễ tạo thể ẩn chứa endotoxin.</div>
+                        <span class="font-extrabold text-medical-800 text-sm block">1. Vi Khuẩn (như E. coli)</span>
+                        <p class="text-slate-600">Tốc độ nhân bản cực nhanh, chi phí lên men rất rẻ[cite: 2]. Ít được sử dụng trực tiếp để sản xuất vaccine thành phẩm do thiếu quá trình glycosyl hóa, nhưng thường được sử dụng để sản xuất các protein không cần biến đổi phức tạp hoặc làm vector vận chuyển[cite: 1].</p>
+                        <div class="text-rose-700 font-semibold">Nhược điểm: Thiếu quá trình Glycosyl hóa (PTM), dễ tạo thể ẩn[cite: 1, 2].</div>
                     </div>
 
                     <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-                        <span class="font-extrabold text-tealmed-600 text-sm block">2. Nấm Men (Pichia / S. cerevisiae)</span>
-                        <p class="text-slate-600">Đơn bào dễ nuôi cấy, có khả năng biến đổi sau dịch mã (PTM), tiết protein trực tiếp ra môi trường.</p>
-                        <div class="text-amber-700 font-semibold">Nhược điểm: Dễ bị hiện tượng Hyper-mannosylation làm sai lệch cấu trúc epitope.</div>
+                        <span class="font-extrabold text-tealmed-600 text-sm block">2. Nấm Men (Saccharomyces cerevisiae / Pichia)</span>
+                        <p class="text-slate-600">Ví dụ nổi tiếng nhất là vaccine viêm gan B tái tổ hợp, là vaccine tái tổ hợp đầu tiên được sử dụng quy mô lớn trên toàn cầu[cite: 1].</p>
+                        <div class="text-amber-700 font-semibold">Đặc điểm: Có biến đổi PTM cơ bản, tiết protein trực tiếp ra môi trường[cite: 2].</div>
                     </div>
 
                     <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
-                        <span class="font-extrabold text-sky-700 text-sm block">3. Tế Bào Côn Trùng (Sf9 / Baculovirus)</span>
-                        <p class="text-slate-600">Thực hiện Glycosyl hóa gần giống tế bào động vật có vú, biểu hiện được các phức hợp VLP cấu trúc phức tạp.</p>
-                        <div class="text-slate-600 font-semibold">Nhược điểm: Chi phí môi trường nuôi cấy cao, thời gian chu kỳ lâu hơn nấm men.</div>
+                        <span class="font-extrabold text-sky-700 text-sm block">3. Tế Bào Côn Trùng (Hệ Baculovirus)</span>
+                        <p class="text-slate-600">Thường được sử dụng để sản xuất các protein phức tạp hoặc hạt virus giả (VLP), ví dụ vaccine HPV và vaccine COVID-19 Novavax đều áp dụng công nghệ tương tự[cite: 1].</p>
+                        <div class="text-slate-600 font-semibold">Đặc điểm: Biểu hiện cấu trúc VLP phức tạp[cite: 1, 2].</div>
                     </div>
 
                     <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
                         <span class="font-extrabold text-purple-700 text-sm block">4. Tế Bào Động Vật Có Vú (CHO)</span>
-                        <p class="text-slate-600">Thực hiện biến đổi sau dịch mã chuẩn xác 100% như người, protein cuộn gập không gian 3D hoàn hảo.</p>
-                        <div class="text-rose-700 font-semibold">Nhược điểm: Chi phí sản xuất đắt nhất, tốc độ tăng trưởng chậm, yêu cầu kiểm soát khắt khe.</div>
+                        <p class="text-slate-600">Thực hiện biến đổi sau dịch mã chuẩn xác 100% như người, protein cuộn gập không gian 3D hoàn hảo[cite: 2].</p>
+                        <div class="text-rose-700 font-semibold">Nhược điểm: Chi phí sản xuất cao, thời gian nuôi cấy lâu[cite: 2].</div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Chương 3: Lịch Sử Phát Triển -->
-    <section id="lich-su" class="py-20 bg-white">
+    <!-- BỔ SUNG CHƯƠNG NỔI BẬT: Chương 3 - Ưu Điểm Chính -->
+    <section id="uu-diem-chinh" class="py-20 bg-white border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương III</span>
+                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương III (Bổ Sung)</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Ưu Điểm Chính Của Vaccine Tái Tổ Hợp</h2>
+                <div class="w-16 h-1 bg-tealmed-500 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Advantage Card 1 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-shield-virus"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">1. An Toàn Cao</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Trong quá trình sản xuất hoàn toàn không cần đến mầm bệnh gây bệnh, loại bỏ nguy cơ lây nhiễm do rò rỉ phòng thí nghiệm hoặc bất hoạt không hoàn toàn; bản thân vaccine không chứa vật liệu di truyền virus, không thể gây bệnh[cite: 1].
+                    </p>
+                </div>
+
+                <!-- Advantage Card 2 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-snowflake"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">2. Hiệu Quả & Tính Ổn Định Tốt</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Sản xuất protein kháng nguyên có độ tinh khiết cao, dễ dàng đạt được tiêu chuẩn hóa và kiểm soát chất lượng. Ví dụ vaccine tái tổ hợp Novavax có thể bảo quản ổn định ở 2°C đến 8°C, tương thích với chuỗi cung ứng vaccine truyền thống[cite: 1].
+                    </p>
+                </div>
+
+                <!-- Advantage Card 3 -->
+                <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition space-y-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-flask-vial"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-900">3. Ứng Phó Mầm Bệnh Khó Nuôi Cấy</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Đối với các mầm bệnh khó nuôi cấy trong phòng thí nghiệm quy mô lớn (như virus viêm gan B, HPV), công nghệ tái tổ hợp cung cấp con đường sản xuất khả thi[cite: 1].
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chương 4: Lịch Sử Phát Triển -->
+    <section id="lich-su" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương IV</span>
                 <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Lịch Sử Phát Triển (1970 - 2026)</h2>
                 <div class="w-16 h-1 bg-tealmed-500 mx-auto mt-3 rounded-full"></div>
             </div>
@@ -309,11 +376,11 @@
                 <!-- Timeline 1 -->
                 <div class="relative pl-8 md:pl-12">
                     <div class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-tealmed-500 text-white flex items-center justify-center text-xs font-bold">1</div>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                         <span class="text-xs font-extrabold text-tealmed-600 uppercase tracking-widest">Thập niên 1970 - 1980</span>
                         <h3 class="text-lg font-bold text-slate-900 mt-1 mb-2">Phát Minh DNA Tái Tổ Hợp & Vaccine Đầu Tiên</h3>
                         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                            Năm 1973, Herbert Boyer và Stanley Cohen công bố kỹ thuật chèn ADN ngoại lai vào plasmid vi khuẩn. Năm 1986, FDA chính thức phê duyệt Recombivax HB (phòng Viêm gan B) - đánh dấu vắc-xin tái tổ hợp đầu tiên được cấp phép sử dụng cho người.
+                            Năm 1973, Herbert Boyer và Stanley Cohen công bố kỹ thuật chèn ADN ngoại lai vào plasmid vi khuẩn. Năm 1986, FDA chính thức phê duyệt Recombivax HB (phòng Viêm gan B) - đánh dấu vắc-xin tái tổ hợp đầu tiên được cấp phép sử dụng cho người[cite: 2].
                         </p>
                     </div>
                 </div>
@@ -321,11 +388,11 @@
                 <!-- Timeline 2 -->
                 <div class="relative pl-8 md:pl-12">
                     <div class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-medical-700 text-white flex items-center justify-center text-xs font-bold">2</div>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                         <span class="text-xs font-extrabold text-medical-700 uppercase tracking-widest">Thập niên 1990 - 2000</span>
                         <h3 class="text-lg font-bold text-slate-900 mt-1 mb-2">Sự Trưởng Thành Của Công Nghệ VLP & Tá Dược</h3>
                         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                            Phát triển thành công hạt giống virus VLP (Virus-Like Particles) tự ngưng kết. Sự ra đời của Gardasil (2006) ngừa ung thư do HPV và Cervarix là minh chứng cho hiệu quả bảo vệ vượt trội không cần mầm bệnh sống.
+                            Phát triển thành công hạt giống virus VLP (Virus-Like Particles) tự ngưng kết. Sự ra đời của Gardasil (2006) ngừa ung thư do HPV và Cervarix là minh chứng cho hiệu quả bảo vệ vượt trội không cần mầm bệnh sống[cite: 2].
                         </p>
                     </div>
                 </div>
@@ -333,11 +400,11 @@
                 <!-- Timeline 3 -->
                 <div class="relative pl-8 md:pl-12">
                     <div class="absolute -left-3 top-0 w-6 h-6 rounded-full bg-tealmed-500 text-white flex items-center justify-center text-xs font-bold">3</div>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
                         <span class="text-xs font-extrabold text-tealmed-600 uppercase tracking-widest">Giai đoạn 2017 - 2026</span>
                         <h3 class="text-lg font-bold text-slate-900 mt-1 mb-2">Kỷ Nguyên Subunit Cao Cấp, Vector Virus & AI</h3>
                         <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                            Phê duyệt Shingrix (phòng Zona với hệ tá dược AS01B), Novavax NVX-CoV2373 (COVID-19), Flublok (Cúm tái tổ hợp) và ứng dụng Trí tuệ nhân tạo (AlphaFold/Rosetta) trong thiết kế cấu trúc 3D kháng nguyên chính xác tuyệt đối.
+                            Phê duyệt Shingrix (phòng Zona với hệ tá dược AS01B), Novavax NVX-CoV2373 (COVID-19), Flublok (Cúm tái tổ hợp) và ứng dụng Trí tuệ nhân tạo (AlphaFold/Rosetta) trong thiết kế cấu trúc 3D kháng nguyên chính xác tuyệt đối[cite: 2].
                         </p>
                     </div>
                 </div>
@@ -345,11 +412,11 @@
         </div>
     </section>
 
-    <!-- Chương 4: Quy Trình 6 Bước Y Khoa -->
+    <!-- Chương 5: Quy Trình 6 Bước Y Khoa -->
     <section id="quy-trinh" class="py-20 bg-slate-100">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương IV</span>
+                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương V</span>
                 <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Quy Trình Production 6 Bước Y Khoa</h2>
                 <p class="text-slate-600 text-xs sm:text-sm mt-2">Nhấp vào từng bước để xem chi tiết kỹ thuật sinh học phân tử</p>
                 <div class="w-16 h-1 bg-tealmed-500 mx-auto mt-3 rounded-full"></div>
@@ -396,11 +463,11 @@
         </div>
     </section>
 
-    <!-- Chương 5: Phân Loại Nền Tảng Vaccine -->
+    <!-- Chương 6: Phân Loại Nền Tảng Vaccine -->
     <section id="phan-loai" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương V</span>
+                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương VI</span>
                 <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Phân Loại Nền Tảng Vaccine Tái Tổ Hợp</h2>
                 <div class="w-16 h-1 bg-tealmed-500 mx-auto mt-3 rounded-full"></div>
             </div>
@@ -414,7 +481,7 @@
                         </div>
                         <h3 class="text-base font-bold text-slate-900 mb-2">1. Subunit Protein (Tiểu Đơn Vị)</h3>
                         <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                            Chứa đoạn protein kháng nguyên đặc hiệu tinh sạch. An toàn tuyệt đối, bảo quản dễ dàng từ 2-8°C.
+                            Chứa đoạn protein kháng nguyên đặc hiệu tinh sạch. An toàn tuyệt đối, bảo quản dễ dàng từ 2-8°C[cite: 2].
                         </p>
                     </div>
                     <span class="text-[10px] font-bold text-tealmed-600 bg-white p-2 rounded border border-slate-200">Ví dụ: Engerix-B, Novavax, Shingrix</span>
@@ -428,7 +495,7 @@
                         </div>
                         <h3 class="text-base font-bold text-slate-900 mb-2">2. Virus-Like Particles (VLP)</h3>
                         <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                            Vỏ protein tự ngưng kết thành cấu trúc hình học 3D giống hệt virus thật nhưng rỗng ruột (không chứa DNA/RNA).
+                            Vỏ protein tự ngưng kết thành cấu trúc hình học 3D giống hệt virus thật nhưng rỗng ruột (không chứa DNA/RNA)[cite: 2].
                         </p>
                     </div>
                     <span class="text-[10px] font-bold text-tealmed-600 bg-white p-2 rounded border border-slate-200">Ví dụ: Gardasil 9 (HPV), Cervarix</span>
@@ -442,7 +509,7 @@
                         </div>
                         <h3 class="text-base font-bold text-slate-900 mb-2">3. Recombinant Viral Vector</h3>
                         <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                            Dùng virus vô hại (Adenovirus) làm xe chở gen mã hóa kháng nguyên vào tế bào người để tự tổng hợp protein.
+                            Dùng virus vô hại (Adenovirus) làm xe chở gen mã hóa kháng nguyên vào tế bào người để tự tổng hợp protein[cite: 2].
                         </p>
                     </div>
                     <span class="text-[10px] font-bold text-tealmed-600 bg-white p-2 rounded border border-slate-200">Ví dụ: AstraZeneca, J&J, Sputnik V</span>
@@ -456,7 +523,7 @@
                         </div>
                         <h3 class="text-base font-bold text-slate-900 mb-2">4. DNA/RNA Recombinant Derived</h3>
                         <p class="text-xs text-slate-600 leading-relaxed mb-4">
-                            Đưa mã di truyền mRN A hoặc Plasmid DNA tổng hợp tái tổ hợp vào cơ thể để tế bào tự sản xuất kháng nguyên.
+                            Đưa mã di truyền mRNA hoặc Plasmid DNA tổng hợp tái tổ hợp vào cơ thể để tế bào tự sản xuất kháng nguyên[cite: 2].
                         </p>
                     </div>
                     <span class="text-[10px] font-bold text-tealmed-600 bg-white p-2 rounded border border-slate-200">Ví dụ: Pfizer-BioNTech, Moderna</span>
@@ -465,11 +532,11 @@
         </div>
     </section>
 
-    <!-- Chương 6: Bảng So Sánh 6 Tiêu Chí -->
+    <!-- Chương 7: Bảng So Sánh 6 Tiêu Chí -->
     <section id="so-sanh" class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương VI</span>
+                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương VII</span>
                 <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Bảng So Sánh 6 Tiêu Chí Chuyên Sâu</h2>
                 <div class="w-16 h-1 bg-tealmed-500 mx-auto mt-3 rounded-full"></div>
             </div>
@@ -483,45 +550,45 @@
                                 Vaccine Tái Tổ Hợp (Subunit / VLP)
                             </th>
                             <th class="p-4 font-extrabold text-slate-300 w-1/4">Vaccine Bất Hoạt (Cổ Điển)</th>
-                            <th class="p-4 font-extrabold text-slate-300 w-1/4">Vaccine mRN A Thế Hệ Mới</th>
+                            <th class="p-4 font-extrabold text-slate-300 w-1/4">Vaccine mRNA Thế Hệ Mới</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-200 font-medium text-xs">
                         <tr class="hover:bg-slate-50">
                             <td class="p-4 font-bold text-slate-900 bg-slate-100">1. Độ An Toàn & Độc Tính</td>
-                            <td class="p-4 bg-teal-50/50 text-emerald-800 font-semibold">Cực kỳ an toàn. 0% nguy cơ tái khôi phục độc lực mầm bệnh.</td>
-                            <td class="p-4 text-slate-600">Có rủi ro nếu quá trình bất hoạt không triệt để.</td>
-                            <td class="p-4 text-slate-600">An toàn cao, có thể gây phản ứng viêm nhẹ tức thời.</td>
+                            <td class="p-4 bg-teal-50/50 text-emerald-800 font-semibold">Cực kỳ an toàn. 0% nguy cơ tái khôi phục độc lực mầm bệnh[cite: 2].</td>
+                            <td class="p-4 text-slate-600">Có rủi ro nếu quá trình bất hoạt không triệt để[cite: 2].</td>
+                            <td class="p-4 text-slate-600">An toàn cao, có thể gây phản ứng viêm nhẹ tức thời[cite: 2].</td>
                         </tr>
                         <tr class="hover:bg-slate-50">
                             <td class="p-4 font-bold text-slate-900 bg-slate-100">2. Chuỗi Lạnh Bảo Quản</td>
-                            <td class="p-4 bg-teal-50/50 text-emerald-800 font-semibold">Rất thuận tiện: Bảo quản ở tủ lạnh chuẩn 2°C - 8°C.</td>
-                            <td class="p-4 text-slate-600">Thuận tiện: Bảo quản tủ lạnh 2°C - 8°C.</td>
-                            <td class="p-4 text-rose-700 font-semibold">Phức tạp: Cần hệ thống đông lạnh sâu (-80°C đến -20°C).</td>
+                            <td class="p-4 bg-teal-50/50 text-emerald-800 font-semibold">Rất thuận tiện: Bảo quản ở tủ lạnh chuẩn 2°C - 8°C[cite: 1, 2].</td>
+                            <td class="p-4 text-slate-600">Thuận tiện: Bảo quản tủ lạnh 2°C - 8°C[cite: 2].</td>
+                            <td class="p-4 text-rose-700 font-semibold">Phức tạp: Cần hệ thống đông lạnh sâu (-80°C đến -20°C)[cite: 2].</td>
                         </tr>
                         <tr class="hover:bg-slate-50">
                             <td class="p-4 font-bold text-slate-900 bg-slate-100">3. Độ Tinh Sạch Kháng Nguyên</td>
-                            <td class="p-4 bg-teal-50/50 text-emerald-800 font-semibold">Cao nhất (>98%), loại bỏ triệt để protein và nội độc tố.</td>
-                            <td class="p-4 text-slate-600">Trung bình, lẫn nhiều mảnh vỏ vi sinh vật gây sốt.</td>
-                            <td class="p-4 text-slate-600">Tinh sạch cao nhờ tổng hợp hóa sinh phân tử.</td>
+                            <td class="p-4 bg-teal-50/50 text-emerald-800 font-semibold">Cao nhất (>98%), loại bỏ triệt để protein và nội độc tố[cite: 2].</td>
+                            <td class="p-4 text-slate-600">Trung bình, lẫn nhiều mảnh vỏ vi sinh vật gây sốt[cite: 2].</td>
+                            <td class="p-4 text-slate-600">Tinh sạch cao nhờ tổng hợp hóa sinh phân tử[cite: 2].</td>
                         </tr>
                         <tr class="hover:bg-slate-50">
                             <td class="p-4 font-bold text-slate-900 bg-slate-100">4. Khả Năng Mở Rộng Bioreactor</td>
-                            <td class="p-4 bg-teal-50/50 text-emerald-800 font-semibold">Rất lớn nhờ các bình lên men công nghiệp hàng ngàn lít.</td>
-                            <td class="p-4 text-slate-600">Hạn chế do phụ thuộc vào nuôi cấy virus/phôi gà.</td>
-                            <td class="p-4 text-slate-600">Rất nhanh nhờ phản ứng tổng hợp enzyme in-vitro.</td>
+                            <td class="p-4 bg-teal-50/50 text-emerald-800 font-semibold">Rất lớn nhờ các bình lên men công nghiệp hàng ngàn lít[cite: 2].</td>
+                            <td class="p-4 text-slate-600">Hạn chế do phụ thuộc vào nuôi cấy virus/phôi gà[cite: 2].</td>
+                            <td class="p-4 text-slate-600">Rất nhanh nhờ phản ứng tổng hợp enzyme in-vitro[cite: 2].</td>
                         </tr>
                         <tr class="hover:bg-slate-50">
                             <td class="p-4 font-bold text-slate-900 bg-slate-100">5. Kích Hoạt T-cell CD8+</td>
-                            <td class="p-4 text-slate-700">Cần có tá dược chuyên biệt (AS01B) hoặc dạng VLP.</td>
-                            <td class="p-4 text-slate-600">Yếu, chủ yếu kích thích miễn dịch thể dịch (B-cell).</td>
-                            <td class="p-4 text-emerald-800 font-semibold">Mạnh mẽ nhờ protein tổng hợp trực tiếp nội bào.</td>
+                            <td class="p-4 text-slate-700">Cần có tá dược chuyên biệt (AS01B, Matrix-M) hoặc dạng VLP[cite: 1, 2].</td>
+                            <td class="p-4 text-slate-600">Yếu, chủ yếu kích thích miễn dịch thể dịch (B-cell)[cite: 2].</td>
+                            <td class="p-4 text-emerald-800 font-semibold">Mạnh mẽ nhờ protein tổng hợp trực tiếp nội bào[cite: 2].</td>
                         </tr>
                         <tr class="hover:bg-slate-50">
                             <td class="p-4 font-bold text-slate-900 bg-slate-100">6. Chi Phí R&D & Phát Triển</td>
-                            <td class="p-4 text-slate-700">Trung bình - Cao (yêu cầu tối ưu hóa hệ thống clone tế bào).</td>
-                            <td class="p-4 text-slate-600">Thấp nhất (công nghệ truyền thống lâu đời).</td>
-                            <td class="p-4 text-slate-600">Rất cao cho nghiên cứu ban đầu, thấp khi sản xuất hàng loạt.</td>
+                            <td class="p-4 text-slate-700">Trung bình - Cao (quá trình biểu hiện và tinh chế protein phức tạp)[cite: 1, 2].</td>
+                            <td class="p-4 text-slate-600">Thấp nhất (công nghệ truyền thống lâu đời)[cite: 2].</td>
+                            <td class="p-4 text-slate-600">Rất cao cho nghiên cứu ban đầu, thấp khi sản xuất hàng loạt[cite: 2].</td>
                         </tr>
                     </tbody>
                 </table>
@@ -529,11 +596,11 @@
         </div>
     </section>
 
-    <!-- Chương 7: Cơ Chế Miễn Dịch Phân Tử -->
+    <!-- Chương 8: Cơ Chế Miễn Dịch Phân Tử -->
     <section id="co-che" class="py-20 bg-slate-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-black text-tealmed-400 uppercase tracking-widest block mb-1">Chương VII</span>
+                <span class="text-xs font-black text-tealmed-400 uppercase tracking-widest block mb-1">Chương VIII</span>
                 <h2 class="text-3xl font-extrabold tracking-tight">Cơ Chế Đáp Ứng Miễn Dịch Phân Tử</h2>
                 <div class="w-16 h-1 bg-tealmed-400 mx-auto mt-3 rounded-full"></div>
             </div>
@@ -543,7 +610,7 @@
                     <span class="w-8 h-8 rounded-lg bg-tealmed-500/20 text-tealmed-400 font-bold flex items-center justify-center text-sm">1</span>
                     <h3 class="font-bold text-white text-sm">Bắt Giữ Kháng Nguyên (APC)</h3>
                     <p class="text-xs text-slate-300 leading-relaxed">
-                        Tế bào Dạng sợi (Dendritic Cells) thực bào protein tái tổ hợp tại vị trí tiêm và di chuyển về hạch bạch huyết.
+                        Tế bào Dạng sợi (Dendritic Cells) thực bào protein tái tổ hợp tại vị trí tiêm và di chuyển về hạch bạch huyết[cite: 2].
                     </p>
                 </div>
 
@@ -551,7 +618,7 @@
                     <span class="w-8 h-8 rounded-lg bg-sky-500/20 text-sky-400 font-bold flex items-center justify-center text-sm">2</span>
                     <h3 class="font-bold text-white text-sm">Trình Diện MHC Class II</h3>
                     <p class="text-xs text-slate-300 leading-relaxed">
-                        Protein ngoại bào bị phân cắt trong Endosome thành các peptide ngắn và nạp lên MHC Class II để kích hoạt T-helper CD4+.
+                        Protein ngoại bào bị phân cắt trong Endosome thành các peptide ngắn và nạp lên MHC Class II để kích hoạt T-helper CD4+[cite: 2].
                     </p>
                 </div>
 
@@ -559,7 +626,7 @@
                     <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 font-bold flex items-center justify-center text-sm">3</span>
                     <h3 class="font-bold text-white text-sm">Trình Diện Chéo MHC Class I</h3>
                     <p class="text-xs text-slate-300 leading-relaxed">
-                        Kháng nguyên ngoại bào chuyển sang con đường MHC Class I giúp kích hoạt T-độc tế bào CD8+ tiêu diệt mầm bệnh.
+                        Kháng nguyên ngoại bào chuyển sang con đường MHC Class I giúp kích hoạt T-độc tế bào CD8+ tiêu diệt mầm bệnh[cite: 2].
                     </p>
                 </div>
 
@@ -567,55 +634,67 @@
                     <span class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 font-bold flex items-center justify-center text-sm">4</span>
                     <h3 class="font-bold text-white text-sm">Tương Bào & Miễn Dịch Ký Ức</h3>
                     <p class="text-xs text-slate-300 leading-relaxed">
-                        Tế bào B biệt hóa thành Tương bào tiết ra lượng lớn kháng thể IgG trung hòa đặc hiệu và tạo các tế bào B ký ức lâu dài.
+                        Tế bào B biệt hóa thành Tương bào tiết ra lượng lớn kháng thể IgG trung hòa đặc hiệu và tạo các tế bào B ký ức lâu dài[cite: 2].
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Chương 8: Ứng Dụng Thực Tế Điển Hình -->
+    <!-- Chương 9: Ứng Dụng Thực Tế Điển Hình -->
     <section id="ung-dung" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương VIII</span>
-                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Các Case Study Ứng Dụng Thực Tế Điển Hình</h2>
+                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương IX</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Ứng Dụng Đại Diện & Tiến Trển Mới</h2>
                 <div class="w-16 h-1 bg-tealmed-500 mx-auto mt-3 rounded-full"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Case 1 -->
-                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80" alt="Engerix-B Hepatitis B Vaccine" class="w-full h-48 object-cover">
-                    <div class="p-6 space-y-2">
+                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80" alt="Engerix-B Hepatitis B Vaccine" class="w-full h-44 object-cover">
+                    <div class="p-5 space-y-2 flex-1">
                         <span class="text-[10px] font-bold bg-tealmed-100 text-tealmed-800 px-2 py-0.5 rounded">Engerix-B / Recombivax HB</span>
-                        <h3 class="font-bold text-slate-900 text-base">Vaccine Viêm Gan B Tái Tổ Hợp</h3>
+                        <h3 class="font-bold text-slate-900 text-sm">Vaccine Viêm Gan B Tái Tổ Hợp</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
-                            Biểu hiện gen HBsAg trong tế bào nấm men <i>S. cerevisiae</i>. Đã giảm >95% tỷ lệ ung thư gan liên quan đến HBV trên toàn cầu.
+                            Vaccine tái tổ hợp được sử dụng lâm sàng sớm nhất, thay thế vaccine huyết tương trước đây, giải quyết triệt để vấn đề an toàn nguồn nguyên liệu[cite: 1]. Biểu hiện gen HBsAg trong tế bào nấm men <i>S. cerevisiae</i>[cite: 2].
                         </p>
                     </div>
                 </div>
 
                 <!-- Case 2 -->
-                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Gardasil 9 HPV Vaccine" class="w-full h-48 object-cover">
-                    <div class="p-6 space-y-2">
+                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80" alt="Gardasil 9 HPV Vaccine" class="w-full h-44 object-cover">
+                    <div class="p-5 space-y-2 flex-1">
                         <span class="text-[10px] font-bold bg-sky-100 text-sky-800 px-2 py-0.5 rounded">Gardasil 9 (VLP)</span>
-                        <h3 class="font-bold text-slate-900 text-base">Vaccine HPV Phòng Ung Thư</h3>
+                        <h3 class="font-bold text-slate-900 text-sm">Vaccine HPV Phòng Ung Thư</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
-                            Cấu trúc VLP vỏ L1 protein phòng ngừa 9 chủng HPV, đạt hiệu quả bảo vệ >90% đối với ung thư cổ tử cung và ung thư vòm họng.
+                            Sử dụng công nghệ VLP (hạt virus giả) tái tổ hợp, có thể phòng ngừa hiệu quả ung thư cổ tử cung và các bệnh liên quan khác[cite: 1, 2].
                         </p>
                     </div>
                 </div>
 
                 <!-- Case 3 -->
-                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 shadow-sm">
-                    <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80" alt="Shingrix Vaccine Zoster" class="w-full h-48 object-cover">
-                    <div class="p-6 space-y-2">
-                        <span class="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded">Shingrix (Tá Dược AS01B)</span>
-                        <h3 class="font-bold text-slate-900 text-base">Vaccine Zona Thần Kinh</h3>
+                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <img src="https://images.unsplash.com/photo-1584036561566-baf8f5f1b144?auto=format&fit=crop&w=800&q=80" alt="Novavax Covid-19" class="w-full h-44 object-cover">
+                    <div class="p-5 space-y-2 flex-1">
+                        <span class="text-[10px] font-bold bg-purple-100 text-purple-800 px-2 py-0.5 rounded">Novavax (NVX-CoV2373)</span>
+                        <h3 class="font-bold text-slate-900 text-sm">Vaccine COVID-19 Novavax</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
-                            Glycoprotein E tái tổ hợp phối hợp hệ tá dược AS01B (MPLA + QS-21) đạt hiệu quả bảo vệ vượt trội >97% ở người cao tuổi.
+                            Đại diện tiêu biểu sử dụng công nghệ protein tái tổ hợp nanoparticle, hiệu quả trong thử nghiệm lâm sàng giai đoạn III đối với chủng virus ban đầu đạt khoảng 90%[cite: 1].
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Case 4 -->
+                <div class="bg-slate-50 rounded-2xl overflow-hidden border border-slate-200 shadow-sm flex flex-col justify-between">
+                    <img src="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=800&q=80" alt="Shingrix and Emerging Vaccines" class="w-full h-44 object-cover">
+                    <div class="p-5 space-y-2 flex-1">
+                        <span class="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded">Lĩnh vực mới nổi</span>
+                        <h3 class="font-bold text-slate-900 text-sm">Sốt Rét, Ebola, HIV</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Phát triển vaccine sốt rét (như RTS,S/AS01 và R21/Matrix-M), cũng như các loại vaccine phức tạp khó phát triển như Ebola, HIV[cite: 1].
                         </p>
                     </div>
                 </div>
@@ -623,52 +702,84 @@
         </div>
     </section>
 
-    <!-- Chương 9: Thách Thức Kỹ Thuật & Tương Lai AI -->
-    <section id="thach-thuc" class="py-20 bg-slate-50">
+    <!-- BỔ SUNG CHƯƠNG NỔI BẬT: Chương 10 - Hạn Chế Và Thách Thức -->
+    <section id="han-che-thach-thuc" class="py-20 bg-slate-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương IX</span>
+                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương X (Bổ Sung)</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Hạn Chế & Thách Thức Kỹ Thuật</h2>
+                <div class="w-16 h-1 bg-tealmed-500 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <div class="bg-amber-50/60 rounded-2xl p-8 border border-amber-200 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                    <h3 class="text-lg font-bold text-amber-900 flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+                        <span>Các Thách Thức Cốt Lõi Cần Vượt Qua:</span>
+                    </h3>
+                    <ul class="space-y-3 list-disc list-inside">
+                        <li>
+                            <strong>Tính sinh miễn dịch tương đối yếu:</strong> Vaccine protein tái tổ hợp thường có tính sinh miễn dịch tương đối yếu, thường cần kết hợp với <strong>tá dược mạnh</strong> (như tá dược dựa trên saponin Matrix-M) hoặc thiết kế thành dạng hạt nano để tăng cường phản ứng miễn dịch[cite: 1].
+                        </li>
+                        <li>
+                            <strong>Chi phí & Chu kỳ sản xuất:</strong> Quá trình biểu hiện và tinh chế protein phức tạp, chi phí sản xuất và chu kỳ phát triển có thể cao hơn các nền tảng mới như mRNA trong một số trường hợp nhất định[cite: 1].
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="rounded-xl overflow-hidden shadow-md border border-amber-200">
+                    <img src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?auto=format&fit=crop&w=800&q=80" alt="Technical Challenges" class="w-full h-56 object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chương 10 gốc (nay là Chương XI): Thách Thức Kỹ Thuật & Xu Hướng AI -->
+    <section id="thach-thuc" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương XI</span>
                 <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Thách Thức Kỹ Thuật & Xu Hướng Tương Lai AI</h2>
                 <div class="w-16 h-1 bg-tealmed-500 mx-auto mt-3 rounded-full"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs sm:text-sm">
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
                     <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
                         <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
                         <span>Thách Thức Kỹ Thuật Cần Vượt Qua</span>
                     </h3>
                     <ul class="space-y-2 text-slate-600 list-disc list-inside leading-relaxed">
-                        <li><strong>Biến đổi sau dịch mã (PTM):</strong> Vi khuẩn thiếu hệ thống Glycosyl hóa khiến protein cuộn gập sai cấu trúc.</li>
-                        <li><strong>Chi phí tối ưu dòng clone:</strong> Lựa chọn tế bào CHO năng suất cao tốn nhiều thời gian và chi phí R&D.</li>
-                        <li><strong>Tạo đáp ứng tế bào CD8+:</strong> Cần các hệ thống tá dược phức tạp (AS01B) để kích hoạt con đường MHC Class I.</li>
+                        <li><strong>Biến đổi sau dịch mã (PTM):</strong> Vi khuẩn thiếu hệ thống Glycosyl hóa khiến protein cuộn gập sai cấu trúc[cite: 2].</li>
+                        <li><strong>Chi phí tối ưu dòng clone:</strong> Lựa chọn tế bào CHO năng suất cao tốn nhiều thời gian và chi phí R&D[cite: 2].</li>
+                        <li><strong>Tạo đáp ứng tế bào CD8+:</strong> Cần các hệ thống tá dược phức tạp (AS01B) để kích hoạt con đường MHC Class I[cite: 2].</li>
                     </ul>
                 </div>
 
-                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
                     <h3 class="font-bold text-slate-900 text-base flex items-center gap-2">
                         <i class="fa-solid fa-robot text-tealmed-600"></i>
                         <span>Xu Hướng AI & Công Nghệ Mới</span>
                     </h3>
                     <ul class="space-y-2 text-slate-600 list-disc list-inside leading-relaxed">
-                        <li><strong>AlphaFold & RosettaFold:</strong> Dự đoán chính xác cấu trúc 3D protein kháng nguyên để thiết kế epitope tối ưu.</li>
-                        <li><strong>Plant Molecular Farming:</strong> Dùng cây trồng di truyền (cây thuốc lá) làm nhà máy sinh học sản xuất vắc-xin giá rẻ.</li>
-                        <li><strong>Thiết kế VLP Đa Năng:</strong> Tự động lắp ráp các hạt giống virus mang đồng thời kháng nguyên của nhiều chủng virus.</li>
+                        <li><strong>AlphaFold & RosettaFold:</strong> Dự đoán chính xác cấu trúc 3D protein kháng nguyên để thiết kế epitope tối ưu[cite: 2].</li>
+                        <li><strong>Plant Molecular Farming:</strong> Dùng cây trồng di truyền (cây thuốc lá) làm nhà máy sinh học sản xuất vắc-xin giá rẻ[cite: 2].</li>
+                        <li><strong>Thiết kế VLP Đa Năng:</strong> Tự động lắp ráp các hạt giống virus mang đồng thời kháng nguyên của nhiều chủng virus[cite: 2].</li>
                     </ul>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Chương 10: Hệ Thống Trắc Nghiệm Tương Tác 10 Câu -->
+    <!-- Hệ Thống Trắc Nghiệm Tương Tác 15 Câu -->
     <section id="trac-nghiem" class="py-20 bg-slate-100">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương X - Đánh Giá Kiến Thức</span>
-                <h2 class="text-3xl font-extrabold text-slate-900">Bài Trắc Nghiệm Tương Tác 10 Câu</h2>
+                <span class="text-xs font-black text-tealmed-600 uppercase tracking-widest block mb-1">Chương XII - Trắc Nghiệm Kiến Thức</span>
+                <h2 class="text-3xl font-extrabold text-slate-900">Bài Trắc Nghiệm Tương Tác 15 Câu</h2>
                 <p class="text-slate-600 text-xs sm:text-sm mt-2">
-                    <span class="font-bold text-tealmed-600">Câu 1-5:</span> Mức độ Dễ đến Vừa &nbsp;|&nbsp; 
-                    <span class="font-bold text-amber-600">Câu 6-10:</span> Mức độ Khó
+                    <span class="font-bold text-tealmed-600">Câu 1-7:</span> Mức độ Dễ đến Vừa &nbsp;|&nbsp; 
+                    <span class="font-bold text-amber-600">Câu 8-15:</span> Mức độ Khó
                 </p>
                 <div class="w-16 h-1 bg-tealmed-500 mx-auto mt-3 rounded-full"></div>
             </div>
@@ -688,9 +799,9 @@
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center space-x-3 text-white font-black text-lg">
                     <i class="fa-solid fa-dna text-tealmed-400"></i>
-                    <span>TÌM THÔNG TIN NHANH LÊN</span>
+                    <span>RecomBiotech Academic Report</span>
                 </div>
-                <p>&copy; TÌM THÔNG TIN NHANH LÊN</p>
+                <p>&copy; 2026 RecomBiotech Academic Report. All rights reserved[cite: 2].</p>
             </div>
         </div>
     </footer>
@@ -756,7 +867,7 @@
             6: {
                 title: "Bước 6: Phối Trộn Tá Dược, Đóng Lọ & Kiểm Định QA/QC",
                 icon: "fa-vial-circle-check",
-                desc: "Kháng nguyên tinh khiết được phối chế với hệ thống tá dược (AS01B, Alum) để tăng độ kích thích miễn dịch.",
+                desc: "Kháng nguyên tinh khiết được phối chế với hệ thống tá dược (AS01B, Matrix-M, Alum) để tăng độ kích thích miễn dịch.",
                 detail: "Trải qua kiểm định chất lượng vô trùng, độc tính và hiệu lực bảo vệ trước khi phát hành lô thương mại.",
                 system: "Đóng gói & Kiểm định y khoa",
                 img: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80"
@@ -807,117 +918,172 @@
         // Initial setup for step 1
         selectProcessStep(1);
 
-        // --- 10-QUESTION QUIZ DATA & LOGIC (EQUAL LENGTH OPTIONS) ---
+        // --- 15-QUESTION QUIZ DATA (7 EASY/MEDIUM, 8 HARD - ALL EQUAL LENGTH OPTIONS) ---
         const quizData = [
             {
-                question: "1. [Mức Dễ] Khái niệm cốt lõi nào định nghĩa chính xác bản chất của Vaccine Tái Tổ Hợp?",
+                question: "1. [Mức Dễ] Định nghĩa nào mô tả chính xác bản chất của công nghệ vaccine tái tổ hợp?",
                 options: [
-                    "A. Đun sôi toàn bộ vi sinh vật mầm bệnh ở 100°C để tiêm.",
-                    "B. Tách gen kháng nguyên đặc hiệu biểu hiện trong tế bào chủ.",
-                    "C. Lấy trực tiếp huyết thanh bệnh nhân đã khỏi bệnh để tiêm.",
-                    "D. Tổng hợp chất hóa học nhân tạo không liên quan sinh học."
+                    "A. Đun sôi mầm bệnh ở nhiệt độ 100°C rồi tiêm trực tiếp.",
+                    "B. Dùng DNA tái tổ hợp sản xuất kháng nguyên trong tế bào chủ.",
+                    "C. Tách lấy toàn bộ huyết thanh của người đã khỏi bệnh.",
+                    "D. Tiêm vi khuẩn sống chưa biến đổi di truyền vào cơ thể."
                 ],
                 correct: 1,
-                explanation: "Vaccine tái tổ hợp ứng dụng kỹ thuật di truyền để tổng hợp riêng kháng nguyên đặc hiệu từ tế bào chủ mà không dùng mầm bệnh sống."
+                explanation: "Vaccine tái tổ hợp là phương pháp sản xuất vaccine hiện đại, ứng dụng công nghệ DNA tái tổ hợp để sản xuất protein kháng nguyên trong tế bào sống (vi khuẩn, nấm men, tế bào côn trùng) rồi tinh chế tạo thành vaccine."
             },
             {
-                question: "2. [Mức Dễ] Vaccine tái tổ hợp đầu tiên được FDA cấp phép sử dụng cho con người năm 1986 là vắc-xin nào?",
+                question: "2. [Mức Dễ] Ưu điểm cốt lõi nhất của công nghệ vaccine tái tổ hợp là gì?",
+                options: [
+                    "A. Không cần nuôi cấy mầm bệnh, loại bỏ nguy cơ lây nhiễm.",
+                    "B. Giúp vắc-xin tự nhân bản liên tục trong máu người tiêm.",
+                    "C. Làm cho vết tiêm hoàn toàn không gây cảm giác đau rát.",
+                    "D. Có khả năng chữa khỏi lập tức các bệnh mạn tính di truyền."
+                ],
+                correct: 0,
+                explanation: "Ưu điểm cốt lõi của công nghệ này là hoàn toàn không cần nuôi cấy toàn bộ mầm bệnh, do đó loại bỏ hoàn toàn nguy cơ nhiễm bệnh do vaccine và nhanh chóng sản xuất kháng nguyên tinh khiết quy mô lớn."
+            },
+            {
+                question: "3. [Mức Dễ] Vaccine tái tổ hợp đầu tiên được sử dụng quy mô lớn trên toàn cầu là vắc-xin nào?",
                 options: [
                     "A. Vaccine phòng bệnh Sởi.",
-                    "B. Vaccine phòng bệnh Lao.",
+                    "B. Vaccine phòng bệnh Dại.",
                     "C. Vaccine Viêm gan B.",
-                    "D. Vaccine phòng Quai bị."
+                    "D. Vaccine phòng bệnh Lao."
                 ],
                 correct: 2,
-                explanation: "Recombivax HB phòng Viêm gan B (chứa kháng nguyên HBsAg biểu hiện trong nấm men) là vắc-xin tái tổ hợp đầu tiên được phê duyệt."
+                explanation: "Vaccine Viêm gan B tái tổ hợp (biểu hiện trong tế bào nấm men Saccharomyces cerevisiae) là vaccine tái tổ hợp đầu tiên được sử dụng quy mô lớn trên toàn thế giới, thay thế vaccine huyết tương."
             },
             {
-                question: "3. [Mức Dễ] Công nghệ Hạt Giống Virus (VLP) dùng trong Gardasil có đặc điểm cấu trúc nổi bật nào?",
+                question: "4. [Mức Dễ] Trong quy trình sản xuất, 'Vector biểu hiện' (Plasmid) đóng vai trò gì?",
                 options: [
-                    "A. Chứa gen ADN nhưng bị vô hiệu hóa.",
-                    "B. Vỏ protein rỗng ruột giống virus thật.",
-                    "C. Vi khuẩn E. coli nhuộm màu sinh học.",
-                    "D. Tế bào bạch cầu nuôi cấy nhân tạo."
+                    "A. Làm dung dịch làm sạch thiết bị lên men sinh học.",
+                    "B. Vận chuyển gen mã hóa kháng nguyên vào tế bào chủ.",
+                    "C. Tiêu diệt toàn bộ vi khuẩn có lợi trong môi trường.",
+                    "D. Chất xúc tác làm vắc-xin đổi sang màu xanh biển."
                 ],
                 correct: 1,
-                explanation: "VLP kích thích miễn dịch rất mạnh nhờ mô phỏng chính xác hình thái 3D của virus thật nhưng hoàn toàn không chứa nhân di truyền gây bệnh."
+                explanation: "Vector biểu hiện (thường là Plasmid DNA) đóng vai trò như 'xe chở' mang gen mã hóa kháng nguyên mục tiêu vào tế bào chủ để hướng dẫn tế bào tổng hợp protein."
             },
             {
-                question: "4. [Mức Vừa] Trong quy trình công nghệ tái tổ hợp, thể truyền (Vector Plasmid) đóng vai trò gì?",
+                question: "5. [Mức Vừa] Điều kiện bảo quản của vaccine tái tổ hợp Novavax (NVX-CoV2373) có ưu điểm gì?",
                 options: [
-                    "A. Làm dung dịch rửa sạch ống nghiệm.",
-                    "B. Xe chở gen kháng nguyên vào tế bào.",
-                    "C. Chất kích thích phản ứng sốt cao.",
-                    "D. Hóa chất tiêu diệt toàn bộ nấm men."
+                    "A. Cần đông sâu ở -80°C giống các vắc-xin thế hệ cũ.",
+                    "B. Ổn định ở 2°C - 8°C, phù hợp chuỗi cung ứng chuẩn.",
+                    "C. Bắt buộc phải bảo quản trong môi trường chân không.",
+                    "D. Phải dùng ngay trong vòng 5 phút sau khi sản xuất."
                 ],
                 correct: 1,
-                explanation: "Plasmid đóng vai trò là thể truyền (Vector) mang gen mã hóa kháng nguyên để vận chuyển vào bên trong tế bào chủ."
+                explanation: "Vaccine protein tái tổ hợp Novavax có ưu điểm rất lớn là bảo quản ổn định ở nhiệt độ tủ lạnh thông thường 2°C đến 8°C, hoàn toàn tương thích với hệ thống chuỗi lạnh truyền thống."
             },
             {
-                question: "5. [Mức Vừa] Tại sao vắc-xin tiểu đơn vị protein tinh sạch thường cần phối hợp thêm hệ thống tá dược (Adjuvant)?",
+                question: "6. [Mức Vừa] Hệ thống tế bào côn trùng (Baculovirus) thường được ứng dụng để sản xuất dòng vaccine nào?",
                 options: [
-                    "A. Tăng cường khả năng kích thích miễn dịch.",
-                    "B. Giúp vắc-xin đổi màu khi hết hạn.",
-                    "C. Giảm nhiệt độ bảo quản xuống -80°C.",
-                    "D. Ngăn vi khuẩn phát triển trong xilanh."
-                ],
-                correct: 0,
-                explanation: "Kháng nguyên tái tổ hợp rất tinh sạch nên cần có tá dược (như Alum) để tăng cường mức độ kích thích đáp ứng miễn dịch của cơ thể."
-            },
-            {
-                question: "6. [Mức Khó] Tại sao vi khuẩn E. coli KHÔNG thích hợp sản xuất vắc-xin yêu cầu biến đổi sau dịch mã (PTM) phức tạp?",
-                options: [
-                    "A. E. coli không có khả năng Glycosyl hóa.",
-                    "B. E. coli bị tiêu diệt ngay khi nhận gen.",
-                    "C. E. coli biến đổi ADN thành mạch đơn.",
-                    "D. E. coli chỉ sống trong môi trường yếm khí."
-                ],
-                correct: 0,
-                explanation: "Vi khuẩn (E. coli) thiếu các cơ quan tử như Lưới nội chất và Bộ máy Golgi nên không thể thực hiện quá trình Glycosyl hóa chuẩn xác."
-            },
-            {
-                question: "7. [Mức Khó] Trong lên men nấm men Pichia pastoris, chất nào được bổ sung để kích hoạt Promoter AOX1 tổng hợp protein?",
-                options: [
-                    "A. Đường Glucose.",
-                    "B. Chất Methanol.",
-                    "C. Đường Lactose.",
-                    "D. Hợp chất IPTG."
+                    "A. Vaccine phòng bệnh Uốn ván.",
+                    "B. Vaccine HPV và Novavax.",
+                    "C. Vaccine phòng bệnh Thủy đậu.",
+                    "D. Vaccine phòng Quai bị."
                 ],
                 correct: 1,
-                explanation: "Promoter AOX1 ở nấm men Pichia pastoris bị ức chế bởi Glucose và chỉ được kích hoạt cảm ứng mạnh mẽ khi bổ sung Methanol."
+                explanation: "Hệ thống tế bào côn trùng (baculovirus) thường được dùng để sản xuất các protein phức tạp hoặc hạt virus giả (VLP), điển hình như vắc-xin HPV và vắc-xin COVID-19 Novavax."
             },
             {
-                question: "8. [Mức Khó] Hệ thống tá dược thế hệ mới AS01B (trong Shingrix) chứa sự phối hợp của hai thành phần sinh học nào?",
+                question: "7. [Mức Vừa] Tại sao vi khuẩn E. coli ít được sử dụng trực tiếp để sản xuất vaccine protein hoàn chỉnh?",
                 options: [
-                    "A. Nhôm Hydroxide và dung dịch Formaldehyde.",
-                    "B. MPLA cùng với Saponin QS-21 dạng Liposome.",
-                    "C. Polyethylene Glycol và hợp chất Chitosan.",
-                    "D. Bacteriophage T4 cùng với chất Dextran."
+                    "A. Do vi khuẩn E. coli thiếu quá trình glycosyl hóa.",
+                    "B. Do E. coli phát triển quá chậm trong môi trường.",
+                    "C. Do E. coli làm phân hủy toàn bộ chuỗi ADN ngoại lai.",
+                    "D. Do E. coli không thể sống trong bình lên men."
+                ],
+                correct: 0,
+                explanation: "Vi khuẩn E. coli ít được dùng trực tiếp sản xuất vaccine thành phẩm phức tạp vì thiếu quá trình biến đổi sau dịch mã (glycosyl hóa), dù nó rất mạnh trong sản xuất protein đơn giản hoặc làm vector."
+            },
+            {
+                question: "8. [Mức Khó] Tại sao vaccine tái tổ hợp thường phải kết hợp với các tá dược mạnh như Matrix-M?",
+                options: [
+                    "A. Do protein tinh sạch có tính sinh miễn dịch yếu.",
+                    "B. Do tá dược giúp làm giảm chi phí sản xuất xuống.",
+                    "C. Do protein tái tổ hợp dễ bị vi khuẩn xâm nhập.",
+                    "D. Do tá dược giúp vắc-xin tăng dung tích trong lọ."
+                ],
+                correct: 0,
+                explanation: "Do protein tái tổ hợp có độ tinh khiết rất cao và không chứa thành phần mầm bệnh nên tính sinh miễn dịch tự nhiên tương đối yếu, bắt buộc phải dùng tá dược mạnh (như Matrix-M) để kích hoạt đáp ứng miễn dịch mạnh mẽ."
+            },
+            {
+                question: "9. [Mức Khó] Trong thử nghiệm lâm sàng giai đoạn III đối với chủng virus ban đầu, vaccine Novavax đạt hiệu quả bao nhiêu?",
+                options: [
+                    "A. Đạt hiệu quả khoảng 50%.",
+                    "B. Đạt hiệu quả khoảng 70%.",
+                    "C. Đạt hiệu quả khoảng 90%.",
+                    "D. Đạt hiệu quả tuyệt đối 100%."
+                ],
+                correct: 2,
+                explanation: "Vaccine tái tổ hợp Novavax (NVX-CoV2373) đạt hiệu quả khoảng 90% trong thử nghiệm lâm sàng giai đoạn III đối với chủng virus ban đầu và có hiệu quả bảo vệ tốt trước các biến thể."
+            },
+            {
+                question: "10. [Mức Khó] Công nghệ Hạt virus giả (Virus-Like Particles - VLP) trong vaccine HPV có đặc tính sinh học gì?",
+                options: [
+                    "A. Chứa bộ gen virus sống nhưng đã giảm độc lực.",
+                    "B. Mô phỏng vỏ virus rỗng ruột không chứa nhân ADN.",
+                    "C. Là vi khuẩn E. coli được nhuộm màu sinh học.",
+                    "D. Chứa mảnh ADN tái tổ hợp của virus cúm mùa."
                 ],
                 correct: 1,
-                explanation: "Tá dược AS01B kết hợp MPLA (kích thích TLR4) và QS-21 (Saponin tự nhiên) trong đệm Liposome, tạo đáp ứng T-cell cực kỳ mạnh mẽ."
+                explanation: "Công nghệ VLP tạo ra các vỏ protein tự ngưng kết mô phỏng chính xác hình thái 3D của virus thật nhưng hoàn toàn 'rỗng ruột' (không chứa vật liệu di truyền ADN/RNA), giúp kích thích miễn dịch mạnh mà tuyệt đối an toàn."
             },
             {
-                question: "9. [Mức Khó] Cơ chế 'Trình diện chéo' (Cross-Presentation) ở tế bào Dendritic giúp kích hoạt dòng tế bào miễn dịch nào?",
+                question: "11. [Mức Khó] Việc chuyển từ vắc-xin huyết tương sang vắc-xin Viêm gan B tái tổ hợp đã giải quyết triệt để vấn đề gì?",
                 options: [
-                    "A. Tế bào T-độc tế bào CD8+.",
-                    "B. Tế bào B sản xuấtIgA.",
-                    "C. Tế bào hồng cầu máu.",
-                    "D. Phức hợp MHC Class II."
+                    "A. Giải quyết triệt để an toàn nguồn nguyên liệu.",
+                    "B. Giúp giảm thời gian tiêm vắc-xin xuống còn 1 giây.",
+                    "C. Thay thế hoàn toàn nhu cầu sử dụng kim tiêm.",
+                    "D. Loại bỏ hoàn toàn yêu cầu bảo quản lạnh."
                 ],
                 correct: 0,
-                explanation: "Trình diện chéo cho phép tế bào Dendritic đưa kháng nguyên ngoại bào nạp lên MHC Class I để kích hoạt T-cell CD8+ tiêu diệt mầm bệnh."
+                explanation: "Vaccine Viêm gan B tái tổ hợp thay thế vắc-xin tách chiết từ huyết thanh người bệnh trước đây, giải quyết triệt để vấn đề an toàn nguồn nguyên liệu và nguy cơ lây nhiễm các bệnh truyền qua đường máu."
             },
             {
-                question: "10. [Mức Khó] Hiện tượng 'Hyper-mannosylation' ở nấm men Saccharomyces cerevisiae gây khó khăn gì cho vắc-xin tái tổ hợp?",
+                question: "12. [Mức Khó] Ngoài COVID-19 và HPV, công nghệ tái tổ hợp đang được ứng dụng phát triển vaccine sốt rét nào?",
                 options: [
-                    "A. Che lấp các Epitope kháng nguyên đích.",
-                    "B. Làm cho dung dịch vắc-xin bốc hơi.",
-                    "C. Tăng trọng lượng làm kết tủa xilanh.",
-                    "D. Biến đổi protein thành lipid trung tính."
+                    "A. RTS,S/AS01 và R21/Matrix-M.",
+                    "B. Engerix-B và Recombivax HB.",
+                    "C. Pfizer-BioNTech và Moderna.",
+                    "D. BCG và vaccine Chân tay miệng."
                 ],
                 correct: 0,
-                explanation: "Nấm men S. cerevisiae gắn chuỗi mannose quá dài (Hyper-mannosylation) tạo rào cản che lấp các epitope kháng nguyên quan trọng."
+                explanation: "Các vắc-xin sốt rét tái tổ hợp thế hệ mới nổi tiếng nhất hiện nay là RTS,S/AS01 và R21/Matrix-M, giúp mở ra bước ngoặt trong phòng chống bệnh sốt rét toàn cầu."
+            },
+            {
+                question: "13. [Mức Khó] Thách thức nào về chi phí và chu kỳ phát triển thường gặp ở vaccine protein tái tổ hợp?",
+                options: [
+                    "A. Quy trình tinh chế phức tạp làm chi phí cao hơn.",
+                    "B. Phải mua mầm bệnh sống với giá rất đắt đỏ.",
+                    "C. Tốn chi phí hủy bỏ vắc-xin do rò rỉ độc lực.",
+                    "D. Chi phí vận chuyển đông sâu -80°C quá lớn."
+                ],
+                correct: 0,
+                explanation: "Do quá trình biểu hiện và tinh chế protein phức tạp (đòi hỏi hệ thống sắc ký và kiểm soát cuộn gập cấu trúc khắt khe), chi phí sản xuất và chu kỳ phát triển có thể cao hơn một số nền tảng mới như mRNA."
+            },
+            {
+                question: "14. [Mức Khó] Hệ thống biểu hiện Nấm men (Saccharomyces cerevisiae) có ưu điểm nổi bật nào trong sản xuất?",
+                options: [
+                    "A. Là tế bào đơn bào dễ nuôi cấy và tạo PTM đơn giản.",
+                    "B. Có khả năng di chuyển linh hoạt như tế bào động vật.",
+                    "C. Không cần cung cấp chất dinh dưỡng khi lên men.",
+                    "D. Tự động tiêu diệt mọi loại vi khuẩn xâm nhập."
+                ],
+                correct: 0,
+                explanation: "Nấm men là hệ thống sinh vật nhân thực đơn bào, dễ nuôi cấy lên men quy mô lớn và có khả năng thực hiện các biến đổi sau dịch mã (PTM) cơ bản cho protein."
+            },
+            {
+                question: "15. [Mức Khó] Tại sao vaccine tái tổ hợp lại được đánh giá là con đường duy nhất cho các mầm bệnh khó nuôi cấy?",
+                options: [
+                    "A. Vì chỉ cần gen mã hóa, không cần nhân mầm bệnh.",
+                    "B. Vì nó cho phép tiêm trực tiếp gen vào cơ thể.",
+                    "C. Vì vắc-xin có thể tự tổng hợp trong môi trường khan.",
+                    "D. Vì mầm bệnh tự tiêu biến khi gặp tế bào chủ."
+                ],
+                correct: 0,
+                explanation: "Đối với các mầm bệnh khó hoặc không thể nuôi cấy số lượng lớn trong phòng thí nghiệm (HBV, HPV), công nghệ tái tổ hợp chỉ cần giải mã chuỗi gen để đưa vào tế bào chủ tổng hợp kháng nguyên, tạo ra con đường sản xuất khả thi duy nhất."
             }
         ];
 
@@ -929,16 +1095,16 @@
             
             if (currentQuizIdx < quizData.length) {
                 const q = quizData[currentQuizIdx];
-                const isHard = currentQuizIdx >= 5;
+                const isHard = currentQuizIdx >= 7;
 
                 container.innerHTML = `
                     <div class="space-y-6">
                         <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                             <span class="text-xs font-bold ${isHard ? 'text-amber-600' : 'text-tealmed-600'} uppercase tracking-widest flex items-center gap-1">
                                 <i class="fa-solid ${isHard ? 'fa-brain text-amber-500' : 'fa-circle-info'}"></i>
-                                Câu hỏi ${currentQuizIdx + 1} / 10 ${isHard ? '(Mức độ: Khó)' : '(Mức độ: Dễ / Vừa)'}
+                                Câu hỏi ${currentQuizIdx + 1} / 15 ${isHard ? '(Mức độ: Khó)' : '(Mức độ: Dễ / Vừa)'}
                             </span>
-                            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Điểm: ${userScore} / 10</span>
+                            <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Điểm: ${userScore} / 15</span>
                         </div>
 
                         <h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">${q.question}</h3>
@@ -956,13 +1122,13 @@
             } else {
                 let rankText = "";
                 let rankColor = "";
-                if (userScore >= 9) {
+                if (userScore >= 13) {
                     rankText = "Xuất Sắc! Bạn đã nắm vững toàn bộ kiến thức sinh học y khoa!";
                     rankColor = "text-emerald-600";
-                } else if (userScore >= 7) {
+                } else if (userScore >= 10) {
                     rankText = "Rất Tốt! Kiến thức của bạn rất vững vàng.";
                     rankColor = "text-tealmed-600";
-                } else if (userScore >= 5) {
+                } else if (userScore >= 7) {
                     rankText = "Khá! Bạn đã hiểu các khái niệm nền tảng cơ bản.";
                     rankColor = "text-amber-600";
                 } else {
@@ -975,8 +1141,8 @@
                         <div class="w-16 h-16 bg-tealmed-500 text-white rounded-full flex items-center justify-center text-2xl mx-auto shadow-xl">
                             <i class="fa-solid fa-award"></i>
                         </div>
-                        <h3 class="text-xl font-black text-slate-900">Hoàn Thành Bài Kiểm Tra 10 Câu!</h3>
-                        <div class="text-3xl font-black text-tealmed-600 my-2">${userScore} / 10</div>
+                        <h3 class="text-xl font-black text-slate-900">Hoàn Thành Bài Kiểm Tra 15 Câu!</h3>
+                        <div class="text-3xl font-black text-tealmed-600 my-2">${userScore} / 15</div>
                         <p class="text-xs sm:text-sm font-bold ${rankColor}">${rankText}</p>
                         
                         <div class="pt-4">
@@ -989,31 +1155,47 @@
             }
         }
 
+        function triggerConfetti() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 60,
+                    spread: 70,
+                    origin: { y: 0.7 }
+                });
+            }
+        }
+
         function handleAnswerSelection(selectedIdx) {
             const q = quizData[currentQuizIdx];
             const isCorrect = selectedIdx === q.correct;
-            if (isCorrect) userScore++;
+            if (isCorrect) {
+                userScore++;
+                triggerConfetti();
+            }
 
             const container = document.getElementById('quiz-main-box');
             container.innerHTML = `
-                <div class="space-y-6">
+                <div class="space-y-6 ${!isCorrect ? 'animate-shake' : ''}">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-4">
-                        <span class="text-xs font-bold text-tealmed-600 uppercase tracking-widest">Câu hỏi ${currentQuizIdx + 1} / 10</span>
+                        <span class="text-xs font-bold text-tealmed-600 uppercase tracking-widest">Câu hỏi ${currentQuizIdx + 1} / 15</span>
                         <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">Điểm hiện tại: ${userScore}</span>
                     </div>
 
                     <h3 class="text-sm sm:text-base font-bold text-slate-900 leading-snug">${q.question}</h3>
 
-                    <div class="p-4 rounded-xl ${isCorrect ? 'bg-emerald-50 border border-emerald-200 text-emerald-900' : 'bg-rose-50 border border-rose-200 text-rose-900'}">
-                        <div class="flex items-center font-bold text-xs sm:text-sm mb-1">
-                            <i class="fa-solid ${isCorrect ? 'fa-circle-check text-emerald-600' : 'fa-circle-xmark text-rose-600'} mr-2"></i>
-                            ${isCorrect ? 'Chính Xác!' : 'Chưa Chính Xác!'}
+                    <div class="p-5 rounded-2xl ${isCorrect ? 'bg-emerald-50 border-2 border-emerald-300 text-emerald-950 shadow-sm' : 'bg-rose-50 border-2 border-rose-300 text-rose-950'}">
+                        <div class="flex items-center font-black text-sm mb-2">
+                            <i class="fa-solid ${isCorrect ? 'fa-circle-check text-emerald-600 text-lg' : 'fa-circle-xmark text-rose-600 text-lg'} mr-2"></i>
+                            ${isCorrect ? 'CHÍNH XÁC! TUYỆT VỜI!' : 'CHƯA CHÍNH XÁC!'}
                         </div>
-                        <p class="text-xs leading-relaxed mt-1"><strong>Giải thích y khoa:</strong> ${q.explanation}</p>
+                        <div class="text-xs leading-relaxed space-y-1">
+                            <p><strong>Đáp án đúng:</strong> ${q.options[q.correct]}</p>
+                            <p class="pt-2 text-slate-700"><strong>Giải thích y khoa chi tiết:</strong> ${q.explanation}</p>
+                        </div>
                     </div>
 
-                    <button onclick="proceedNextQuestion()" class="w-full py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition text-xs uppercase tracking-wider">
-                        ${currentQuizIdx + 1 < quizData.length ? 'Câu hỏi tiếp theo' : 'Tổng kết điểm số'}
+                    <button onclick="proceedNextQuestion()" class="w-full py-3.5 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl transition text-xs uppercase tracking-wider shadow-md">
+                        ${currentQuizIdx + 1 < quizData.length ? 'Câu hỏi tiếp theo' : 'Xem kết quả bài kiểm tra'}
                     </button>
                 </div>
             `;
